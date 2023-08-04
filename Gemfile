@@ -19,5 +19,6 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman', '~> 0.87.2'
   gem 'rubocop-rails', '~> 2.20.2', require: false
 end
