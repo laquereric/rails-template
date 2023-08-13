@@ -37,3 +37,6 @@ You can also tweak its settings in `.rubocop.yml`.
 Runtime developer console very useful to debug that can be used by inserting `binding.pry` in the code.
 
 To use it, run the app with `rails s` in one terminal and `bin/vite dev` in another instead of using `foreman start -f Procfile.dev`.
+
+#### [dotenv](https://github.com/bkeepers/dotenv)
+Load environment variables that can be accessed via `ENV`. Create the `.env` file and define it like `VARIABLE_NAME=123`.
