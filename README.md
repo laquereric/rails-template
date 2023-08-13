@@ -7,7 +7,7 @@ Rails 7 application template that includes TailwindCSS, Stimulus and Vite.
 1. Clone this repository (replace `your-project-name`)
 
 ```
-git clone git@github.com:grascovit/rails-template.git your-project-name
+git clone --depth=1 --branch=main git@github.com:grascovit/rails-template.git your-project-name && cd your-project-name && rm -rf .git
 ```
 
 2. Enter the project folder
