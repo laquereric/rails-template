@@ -7,7 +7,7 @@ ruby '3.2.1'
 
 gem 'pg', '~> 1.5.3'
 gem 'puma', '~> 6.3.0'
-gem 'rails', '7.0.6'
+gem 'rails', '~> 7.0.7'
 gem 'turbo-rails', '~> 1.4.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'vite_rails', '~> 3.0.15'
