@@ -3,14 +3,14 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.1'
+ruby '3.2.2'
 
-gem 'pg', '~> 1.5.3'
-gem 'puma', '~> 6.3.0'
-gem 'rails', '~> 7.0.7'
-gem 'turbo-rails', '~> 1.4.0'
+gem 'pg', '~> 1.5.4'
+gem 'puma', '~> 6.4.0'
+gem 'rails', '~> 7.1.1'
+gem 'turbo-rails', '~> 1.5.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'vite_rails', '~> 3.0.15'
+gem 'vite_rails', '~> 3.0.17'
 
 group :development, :test do
   gem 'dotenv-rails', '~> 2.8.1'
@@ -20,5 +20,5 @@ end
 
 group :development do
   gem 'foreman', '~> 0.87.2'
-  gem 'rubocop-rails', '~> 2.20.2', require: false
+  gem 'rubocop-rails', '~> 2.21.2', require: false
 end
