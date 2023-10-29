@@ -1,6 +1,6 @@
 # Rails Template
 
-Rails 7 application template that includes TailwindCSS, Stimulus and Vite.
+Rails 7.1 application template that includes TailwindCSS, Stimulus and Vite.
 
 ### Instructions
 
