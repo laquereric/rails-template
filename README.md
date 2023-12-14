@@ -18,11 +18,12 @@ cd your-project-name
 
 3. Open `config/application.rb` and rename `PlaceholderName` to your project's name in camel case (e.g. `YourProjectName`)
 4. Go to `config/database.yml` and replace all occurrences of `placeholder_name` with your project's name in snake case (e.g. `your_project_name`)
-5. Open `app/views/layouts/application.html.erb` and replace the `<title>` with your project name
-6. Run `bundle install`
-7. Run `yarn install` (or `npm install`)
-8. Run `rails db:setup`
-9. Run the project with `foreman start -f Procfile.dev`
+5. Go to `config/cable.yml` and replace all occurrences of `placeholder_name` with your project's name in snake case (e.g. `your_project_name`)
+6. Open `app/views/layouts/application.html.erb` and replace the `<title>` with your project name
+7. Run `bundle install`
+8. Run `yarn install` (or `npm install`)
+9. Run `rails db:setup`
+10. Run the project with `foreman start -f Procfile.dev`
 
 ### Tools
 
