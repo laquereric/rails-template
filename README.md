@@ -13,11 +13,12 @@ git clone --depth=1 --branch=main git@github.com:grascovit/rails-template.git yo
 2. Open `config/application.rb` and rename `PlaceholderName` to your project's name in camel case (e.g. `YourProjectName`)
 3. Go to `config/database.yml` and replace all occurrences of `placeholder_name` with your project's name in snake case (e.g. `your_project_name`)
 4. Go to `config/cable.yml` and replace all occurrences of `placeholder_name` with your project's name in snake case (e.g. `your_project_name`)
-5. Open `app/views/layouts/application.html.erb` and replace the `<title>` with your project name
-6. Run `bundle install`
-7. Run `yarn install` (or `npm install`)
-8. Run `rails db:setup`
-9. Run the project with `foreman start -f Procfile.dev`
+5. Run `rails credentials:edit` to generate new `config/credentials.yml.enc` and `config/master.key` files (only commit the `config/credentials.yml.enc` file)
+6. Open `app/views/layouts/application.html.erb` and replace the `<title>` with your project name
+7. Run `bundle install`
+8. Run `yarn install` (or `npm install`)
+9. Run `rails db:setup`
+10. Run the project with `foreman start -f Procfile.dev`
 
 ### Tools
 
