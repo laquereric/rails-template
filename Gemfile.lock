@@ -75,6 +75,8 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     base64 (0.2.0)
     bigdecimal (3.1.6)
@@ -104,6 +106,10 @@ GEM
       reline (>= 0.4.2)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -141,6 +147,7 @@ GEM
       method_source (~> 1.0)
     psych (5.1.2)
       stringio
+    public_suffix (5.0.3)
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
@@ -263,6 +270,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv-rails (~> 2.8.1)
   foreman (~> 0.87.2)
+  letter_opener (~> 1.8.1)
   pg (~> 1.5.4)
   pry (~> 0.14.2)
   puma (~> 6.4.2)
@@ -278,4 +286,4 @@ RUBY VERSION
    ruby 3.2.3p157
 
 BUNDLED WITH
-   2.4.6
+   2.5.5
