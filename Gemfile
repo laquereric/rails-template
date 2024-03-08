@@ -14,7 +14,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'vite_rails', '~> 3.0.17'
 
 group :development, :test do
-  gem 'dotenv-rails', '~> 3.0.2'
+  gem 'dotenv-rails', '~> 3.1.0'
   gem 'pry', '~> 0.14.2'
   gem 'rspec-rails', '~> 6.1.1'
 end
