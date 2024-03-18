@@ -15,6 +15,8 @@ gem 'vite_rails', '~> 3.0.17'
 
 group :development, :test do
   gem 'dotenv-rails', '~> 3.1.0'
+  gem 'factory_bot_rails', '~> 6.4.3'
+  gem 'faker', '~> 3.2.3'
   gem 'pry', '~> 0.14.2'
   gem 'rspec-rails', '~> 6.1.1'
 end
@@ -23,4 +25,8 @@ group :development do
   gem 'foreman', '~> 0.87.2'
   gem 'letter_opener', '~> 1.9.0'
   gem 'rubocop-rails', '~> 2.24.0', require: false
+end
+
+group :test do
+  gem 'shoulda-matchers', '~> 6.2.0'
 end
