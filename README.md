@@ -10,17 +10,12 @@ Rails 7.1 application template that includes TailwindCSS, Stimulus and Vite.
 git clone --depth=1 --branch=main git@github.com:grascovit/rails-template.git your-project-name && cd your-project-name && rm -rf .git .github
 ```
 
-2. Open `config/application.rb` and rename `PlaceholderName` to your project's name in camel case (e.g. `YourProjectName`)
-3. Go to `config/database.yml` and replace all occurrences of `placeholder_name` with your project's name in snake case (e.g. `your_project_name`)
-4. Go to `config/cable.yml` and replace all occurrences of `placeholder_name` with your project's name in snake case (e.g. `your_project_name`)
-5. Run `rails credentials:edit` to generate new `config/credentials.yml.enc` and `config/master.key` files (only commit the `config/credentials.yml.enc` file)
-6. Open `app/views/layouts/application.html.erb` and replace the `<title>` with your project name
-7. Go to `app/mailer/application_mailer.rb` and replace `no-reply@placeholder.com` with your email.
-8. Remember to set the credentials from your email service in `config/environments/production.rb` before deploying.
-9. Run `bundle install`
-10. Run `yarn install` (or `npm install`)
-11. Run `rails db:setup`
-12. Run the project with `foreman start -f Procfile.dev`
+2. Run `bin/rails app:template LOCATION=https://gist.githubusercontent.com/grascovit/4e1e8d6b49ab62ad45ac19165686afad/raw/924e4f8a8897223ef6c2948ffa42b46b6062ecbd/rails_template.rb` to replace the placeholder name with your project's name.
+3. Be sure to confirm the domain at `app/mailer/application_mailer.rb`.
+4. Remember to set the credentials from your email service in `config/environments/production.rb` before deploying.
+5. Run the project with `foreman start -f Procfile.dev`.
+
+Remember to run `bundle install` if you change your `Gemfile` or `yarn install` if you change your `package.json`.
 
 ### Tools
 
