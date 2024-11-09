@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.3'
+ruby '3.3.6'
 
 gem 'mailgun-ruby', '~> 1.2.15'
 gem 'pg', '~> 1.5.9'
