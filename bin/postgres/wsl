@@ -1,0 +1,204 @@
+#!/bin/bash
+
+# PostgreSQL WSL Management Script
+# Usage: bin/postgres/wsl [create|start|stop|purge|status]
+
+set -e
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to print colored output
+print_status() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+print_header() {
+    echo -e "${BLUE}=== PostgreSQL WSL Management ===${NC}"
+}
+
+# Function to check if PostgreSQL is installed
+check_postgres_installed() {
+    if ! command -v psql &> /dev/null; then
+        print_error "PostgreSQL is not installed. Please install it first:"
+        echo "sudo apt update && sudo apt install postgresql postgresql-contrib"
+        exit 1
+    fi
+}
+
+# Function to check if running as root for certain operations
+check_sudo() {
+    if [[ $EUID -eq 0 ]]; then
+        print_warning "This script should not be run as root for most operations."
+        exit 1
+    fi
+}
+
+# Function to start PostgreSQL service
+start_postgres() {
+    print_header
+    print_status "Starting PostgreSQL service..."
+    
+    if sudo service postgresql start; then
+        print_status "PostgreSQL service started successfully"
+    else
+        print_error "Failed to start PostgreSQL service"
+        exit 1
+    fi
+}
+
+# Function to stop PostgreSQL service
+stop_postgres() {
+    print_header
+    print_status "Stopping PostgreSQL service..."
+    
+    if sudo service postgresql stop; then
+        print_status "PostgreSQL service stopped successfully"
+    else
+        print_error "Failed to stop PostgreSQL service"
+        exit 1
+    fi
+}
+
+# Function to check PostgreSQL status
+status_postgres() {
+    print_header
+    print_status "Checking PostgreSQL service status..."
+    
+    sudo service postgresql status
+}
+
+# Function to create/configure PostgreSQL user and database
+create_postgres() {
+    print_header
+    print_status "Setting up PostgreSQL for Rails development..."
+    
+    # Start PostgreSQL if not running
+    if ! sudo service postgresql status | grep -q "active"; then
+        print_status "Starting PostgreSQL service..."
+        sudo service postgresql start
+    fi
+    
+    # Set password for postgres user
+    print_status "Setting password for postgres user..."
+    if sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'password';" 2>/dev/null; then
+        print_status "Postgres user password set successfully"
+    else
+        print_warning "Could not set postgres user password. It may already be set."
+    fi
+    
+    # Create databases if they don't exist
+    print_status "Creating Rails databases..."
+    if bundle exec rails db:create 2>/dev/null; then
+        print_status "Rails databases created successfully"
+    else
+        print_warning "Could not create Rails databases. They may already exist."
+    fi
+    
+    # Run migrations
+    print_status "Running database migrations..."
+    if bundle exec rails db:migrate 2>/dev/null; then
+        print_status "Database migrations completed"
+    else
+        print_warning "Could not run migrations. Check your Rails setup."
+    fi
+    
+    print_status "PostgreSQL setup completed!"
+}
+
+# Function to purge PostgreSQL data
+purge_postgres() {
+    print_header
+    print_warning "This will delete all PostgreSQL data and databases!"
+    echo -n "Are you sure you want to continue? (y/N): "
+    read -r response
+    
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        print_status "Stopping PostgreSQL service..."
+        sudo service postgresql stop
+        
+        print_status "Removing PostgreSQL data directory..."
+        sudo rm -rf /var/lib/postgresql/*/main
+        
+        print_status "Reinitializing PostgreSQL database cluster..."
+        sudo pg_dropcluster --stop 14 main || true
+        sudo pg_createcluster 14 main
+        
+        print_status "Starting PostgreSQL service..."
+        sudo service postgresql start
+        
+        print_status "PostgreSQL data purged successfully!"
+        print_warning "You will need to run 'bin/postgres/wsl create' to set up Rails databases again."
+    else
+        print_status "Purge cancelled."
+    fi
+}
+
+# Function to show usage
+show_usage() {
+    echo "Usage: $0 [create|start|stop|purge|status]"
+    echo ""
+    echo "Commands:"
+    echo "  create  - Set up PostgreSQL for Rails development (start service, set password, create DBs)"
+    echo "  start   - Start PostgreSQL service"
+    echo "  stop    - Stop PostgreSQL service"
+    echo "  status  - Show PostgreSQL service status"
+    echo "  purge   - Remove all PostgreSQL data (DANGEROUS!)"
+    echo ""
+    echo "Examples:"
+    echo "  $0 create   # Set up everything for Rails development"
+    echo "  $0 start    # Just start the service"
+    echo "  $0 status   # Check if service is running"
+}
+
+# Main script logic
+main() {
+    # Check if we're in a Rails project
+    if [[ ! -f "Gemfile" ]]; then
+        print_error "This script must be run from a Rails project root directory"
+        exit 1
+    fi
+    
+    # Check if PostgreSQL is installed
+    check_postgres_installed
+    
+    # Check if not running as root
+    check_sudo
+    
+    case "${1:-}" in
+        "create")
+            create_postgres
+            ;;
+        "start")
+            start_postgres
+            ;;
+        "stop")
+            stop_postgres
+            ;;
+        "status")
+            status_postgres
+            ;;
+        "purge")
+            purge_postgres
+            ;;
+        *)
+            show_usage
+            exit 1
+            ;;
+    esac
+}
+
+# Run main function with all arguments
+main "$@" 
